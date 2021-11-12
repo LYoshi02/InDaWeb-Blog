@@ -13,6 +13,8 @@ export type Post = {
   excerpt: string;
   featuredImage: {
     url: string;
+    width: string;
+    height: string;
   };
   categories: {
     name: string;
