@@ -1,5 +1,5 @@
 import { request, gql } from "graphql-request";
-import { Post, RelatedPost } from "../types";
+import { Post, PostCategory, RelatedPost } from "../types";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!;
 
@@ -95,4 +95,23 @@ export const getSimilarPosts = async () => {
   const result = await request<RelatedPostsData>(graphqlAPI, query);
 
   return result.posts;
+};
+
+interface CategoriesData {
+  categories: PostCategory[];
+}
+
+export const getCategories = async () => {
+  const query = gql`
+    query GetCategories {
+      categories {
+        slug
+        name
+      }
+    }
+  `;
+
+  const result = await request<CategoriesData>(graphqlAPI, query);
+
+  return result.categories;
 };

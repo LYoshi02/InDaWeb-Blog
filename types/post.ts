@@ -30,3 +30,8 @@ export type RelatedPost = {
   };
   slug: string;
 };
+
+export type PostCategory = {
+  name: string;
+  slug: string;
+};
