@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import { getPosts } from "../services";
 
 import { Categories, PostCard, PostWidget } from "../components";
+import { getPosts } from "../services";
 import { Post } from "../types";
 
 type Props = {

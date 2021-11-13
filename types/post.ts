@@ -21,3 +21,12 @@ export type Post = {
     slug: string;
   }[];
 };
+
+export type RelatedPost = {
+  title: string;
+  createdAt: string;
+  featuredImage: {
+    url: string;
+  };
+  slug: string;
+};

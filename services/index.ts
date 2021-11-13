@@ -1,9 +1,9 @@
 import { request, gql } from "graphql-request";
-import { Post } from "../types";
+import { Post, RelatedPost } from "../types";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!;
 
-interface TData {
+interface AllPostsData {
   postsConnection: {
     edges: {
       node: Post;
@@ -13,7 +13,7 @@ interface TData {
 
 export const getPosts = async () => {
   const query = gql`
-    query MyQuery {
+    query GetAllPosts {
       postsConnection {
         edges {
           node {
@@ -44,7 +44,55 @@ export const getPosts = async () => {
     }
   `;
 
-  const result = await request<TData>(graphqlAPI, query);
+  const result = await request<AllPostsData>(graphqlAPI, query);
 
   return result.postsConnection.edges;
+};
+
+interface RelatedPostsData {
+  posts: RelatedPost[];
+}
+
+export const getRecentPosts = async () => {
+  const query = gql`
+    query GetPostDetails {
+      posts(orderBy: createdAt_DESC, first: 3) {
+        title
+        slug
+        createdAt
+        featuredImage {
+          url
+        }
+      }
+    }
+  `;
+
+  const result = await request<RelatedPostsData>(graphqlAPI, query);
+
+  return result.posts;
+};
+
+export const getSimilarPosts = async () => {
+  const query = gql`
+    query GetPostDetails($slug: String!, $categories: [String!]) {
+      posts(
+        where: {
+          slug_not: $slug
+          AND: { categories_some: { slug_in: $categories } }
+        }
+        last: 3
+      ) {
+        title
+        slug
+        createdAt
+        featuredImage {
+          url
+        }
+      }
+    }
+  `;
+
+  const result = await request<RelatedPostsData>(graphqlAPI, query);
+
+  return result.posts;
 };
