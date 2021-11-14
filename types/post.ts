@@ -1,14 +1,8 @@
 import { RichTextContent } from "@graphcms/rich-text-types";
+import { Author } from "./";
 
 export interface Post {
-  author: {
-    bio: string;
-    name: string;
-    id: string;
-    photo: {
-      url: string;
-    };
-  };
+  author: Author;
   createdAt: string;
   slug: string;
   title: string;
@@ -18,10 +12,7 @@ export interface Post {
     width: string;
     height: string;
   };
-  categories: {
-    name: string;
-    slug: string;
-  }[];
+  categories: PostCategory[];
 }
 
 export interface PostDetails extends Post {
