@@ -1,5 +1,12 @@
 import { request, gql } from "graphql-request";
-import { Post, PostCategory, PostDetails, RelatedPost } from "../types";
+import {
+  SentComment,
+  Post,
+  PostCategory,
+  PostDetails,
+  RelatedPost,
+  FetchedComment,
+} from "../types";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!;
 
@@ -158,4 +165,37 @@ export const getPostDetails = async (slug: string) => {
   const result = await request<PostDetailsData>(graphqlAPI, query, { slug });
 
   return result.post;
+};
+
+export const submitComment = async (comment: SentComment) => {
+  const result = await fetch("/api/comments", {
+    method: "POST",
+    body: JSON.stringify(comment),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return await result.json();
+};
+
+interface CommentsData {
+  comments: FetchedComment[];
+}
+
+export const getComments = async (slug: string) => {
+  const query = gql`
+    query GetComments($slug: String!) {
+      comments(where: { post: { slug: $slug } }) {
+        comment
+        name
+        id
+        createdAt
+      }
+    }
+  `;
+
+  const result = await request<CommentsData>(graphqlAPI, query, { slug });
+
+  return result.comments;
 };
