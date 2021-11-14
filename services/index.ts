@@ -1,5 +1,5 @@
 import { request, gql } from "graphql-request";
-import { Post, PostCategory, RelatedPost } from "../types";
+import { Post, PostCategory, PostDetails, RelatedPost } from "../types";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!;
 
@@ -72,7 +72,7 @@ export const getRecentPosts = async () => {
   return result.posts;
 };
 
-export const getSimilarPosts = async () => {
+export const getSimilarPosts = async (slug: string, categories: string[]) => {
   const query = gql`
     query GetPostDetails($slug: String!, $categories: [String!]) {
       posts(
@@ -92,7 +92,10 @@ export const getSimilarPosts = async () => {
     }
   `;
 
-  const result = await request<RelatedPostsData>(graphqlAPI, query);
+  const result = await request<RelatedPostsData>(graphqlAPI, query, {
+    slug,
+    categories,
+  });
 
   return result.posts;
 };
@@ -114,4 +117,45 @@ export const getCategories = async () => {
   const result = await request<CategoriesData>(graphqlAPI, query);
 
   return result.categories;
+};
+
+interface PostDetailsData {
+  post: PostDetails;
+}
+
+export const getPostDetails = async (slug: string) => {
+  const query = gql`
+    query GetPostDetails($slug: String!) {
+      post(where: { slug: $slug }) {
+        author {
+          bio
+          name
+          id
+          photo {
+            url
+          }
+        }
+        createdAt
+        slug
+        title
+        excerpt
+        featuredImage {
+          url
+          width
+          height
+        }
+        categories {
+          name
+          slug
+        }
+        content {
+          raw
+        }
+      }
+    }
+  `;
+
+  const result = await request<PostDetailsData>(graphqlAPI, query, { slug });
+
+  return result.post;
 };

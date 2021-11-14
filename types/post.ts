@@ -1,4 +1,6 @@
-export type Post = {
+import { RichTextContent } from "@graphcms/rich-text-types";
+
+export interface Post {
   author: {
     bio: string;
     name: string;
@@ -20,7 +22,13 @@ export type Post = {
     name: string;
     slug: string;
   }[];
-};
+}
+
+export interface PostDetails extends Post {
+  content: {
+    raw: RichTextContent;
+  };
+}
 
 export type RelatedPost = {
   title: string;

@@ -1,1 +1,1 @@
-export type { Post, PostCategory, RelatedPost } from "./post";
+export type { Post, PostCategory, PostDetails, RelatedPost } from "./post";

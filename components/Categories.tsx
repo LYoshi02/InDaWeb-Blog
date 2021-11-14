@@ -4,8 +4,14 @@ import Link from "next/link";
 import { getCategories } from "../services";
 import { PostCategory } from "../types";
 
-const Categories = () => {
-  const [categories, setCategories] = useState<PostCategory[]>([]);
+type Props = {
+  categories?: PostCategory[];
+};
+
+const Categories = (props: Props) => {
+  const [categories, setCategories] = useState<PostCategory[]>(
+    props.categories || []
+  );
 
   useEffect(() => {
     getCategories().then((res) => {
