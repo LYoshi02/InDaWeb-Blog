@@ -6,6 +6,7 @@ import {
   PostDetails,
   RelatedPost,
   FetchedComment,
+  FeaturedPost,
 } from "../types";
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT!;
@@ -198,4 +199,73 @@ export const getComments = async (slug: string) => {
   const result = await request<CommentsData>(graphqlAPI, query, { slug });
 
   return result.comments;
+};
+
+interface FeaturedPostsData {
+  posts: FeaturedPost[];
+}
+
+export const getFeaturedPosts = async () => {
+  const query = gql`
+    query GetFeaturedPosts {
+      posts(where: { featuredPost: true }) {
+        title
+        slug
+        createdAt
+        featuredImage {
+          url
+        }
+        author {
+          name
+          photo {
+            url
+          }
+        }
+      }
+    }
+  `;
+
+  const result = await request<FeaturedPostsData>(graphqlAPI, query);
+
+  return result.posts;
+};
+
+interface PostsByCategoryData {
+  posts: Post[];
+}
+
+export const getPostsByCategory = async (category: string) => {
+  const query = gql`
+    query GetPostsByCategory($category: String!) {
+      posts(where: { categories_some: { slug: $category } }) {
+        author {
+          bio
+          name
+          id
+          photo {
+            url
+          }
+        }
+        createdAt
+        slug
+        title
+        excerpt
+        featuredImage {
+          url
+          width
+          height
+        }
+        categories {
+          name
+          slug
+        }
+      }
+    }
+  `;
+
+  const result = await request<PostsByCategoryData>(graphqlAPI, query, {
+    category,
+  });
+
+  return result.posts;
 };

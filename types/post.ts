@@ -34,3 +34,18 @@ export type PostCategory = {
   name: string;
   slug: string;
 };
+
+export type FeaturedPost = {
+  title: string;
+  slug: string;
+  createdAt: string;
+  featuredImage: {
+    url: string;
+  };
+  author: {
+    name: string;
+    photo: {
+      url: string;
+    };
+  };
+};
