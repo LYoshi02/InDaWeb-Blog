@@ -8,3 +8,4 @@ export { default as AuthorDetails } from "./Author";
 export { default as CommentsForm } from "./CommentsForm";
 export { default as Comments } from "./Comments";
 export { default as FeaturedPosts } from "./FeaturedPosts";
+export { default as Head } from "./Head";

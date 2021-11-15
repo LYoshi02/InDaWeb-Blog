@@ -22,7 +22,7 @@ interface AllPostsData {
 export const getPosts = async () => {
   const query = gql`
     query GetAllPosts {
-      postsConnection {
+      postsConnection(orderBy: createdAt_DESC) {
         edges {
           node {
             author {
@@ -125,6 +125,26 @@ export const getCategories = async () => {
   const result = await request<CategoriesData>(graphqlAPI, query);
 
   return result.categories;
+};
+
+interface CategoryData {
+  category: {
+    name: string;
+  };
+}
+
+export const getCategoryBySlug = async (slug: string) => {
+  const query = gql`
+    query GetCategoryBySlug($slug: String!) {
+      category(where: { slug: $slug }) {
+        name
+      }
+    }
+  `;
+
+  const result = await request<CategoryData>(graphqlAPI, query, { slug });
+
+  return result.category;
 };
 
 interface PostDetailsData {
@@ -237,7 +257,10 @@ interface PostsByCategoryData {
 export const getPostsByCategory = async (category: string) => {
   const query = gql`
     query GetPostsByCategory($category: String!) {
-      posts(where: { categories_some: { slug: $category } }) {
+      posts(
+        where: { categories_some: { slug: $category } }
+        orderBy: createdAt_DESC
+      ) {
         author {
           bio
           name

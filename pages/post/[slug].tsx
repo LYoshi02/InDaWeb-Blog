@@ -8,6 +8,7 @@ import {
   AuthorDetails,
   Comments,
   CommentsForm,
+  Head,
 } from "../../components";
 import { getPostDetails, getPosts } from "../../services";
 import { PostDetails } from "../../types";
@@ -22,7 +23,12 @@ interface IParams extends ParsedUrlQuery {
 
 const PostDetails = ({ post }: Props) => {
   return (
-    <div className="container mx-auto px-10 mb-8">
+    <div className="container mx-auto px-4 mb-8 md:px-10">
+      <Head
+        title={post.title}
+        description={post.excerpt}
+        imageUrl={post.featuredImage.url}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="col-span-1 lg:col-span-8">
           <PostDetail post={post} />
@@ -52,7 +58,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
   return {
     props: { post: postDetails },
-    revalidate: 180,
+    revalidate: 60,
   };
 };
 
@@ -64,6 +70,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: slugParams,
-    fallback: false,
+    fallback: "blocking",
   };
 };

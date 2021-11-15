@@ -14,7 +14,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="container mx-auto px-10 mb-8">
+    <header className="container mx-auto px-4 mb-8 md:px-10">
       <div className="border-b w-full inline-block border-blue-400 py-8">
         <div className="md:float-left block">
           <h1 className="cursor-pointer font-bold text-4xl text-white">

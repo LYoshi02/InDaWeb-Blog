@@ -1,7 +1,12 @@
 import type { GetStaticProps, NextPage } from "next";
-import Head from "next/head";
 
-import { Categories, PostCard, FeaturedPosts, PostWidget } from "../components";
+import {
+  Categories,
+  Head,
+  PostCard,
+  FeaturedPosts,
+  PostWidget,
+} from "../components";
 import { getPosts } from "../services";
 import { Post } from "../types";
 
@@ -11,12 +16,8 @@ type Props = {
 
 const Home: NextPage<Props> = (props) => {
   return (
-    <div className="container mx-auto px-10 mb-8">
-      <Head>
-        <title>CMS Blog</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <div className="container mx-auto px-4 mb-8 md:px-10">
+      <Head />
       <FeaturedPosts />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -44,5 +45,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props: { posts },
+    revalidate: 60,
   };
 };

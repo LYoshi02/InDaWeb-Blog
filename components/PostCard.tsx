@@ -11,14 +11,14 @@ type Props = {
 const PostCard = ({ post }: Props) => {
   return (
     <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8">
-      <div className="relative overflow-hidden shadow-md mb-6">
+      <div className="overflow-hidden shadow-md mb-6">
         <Image
           src={post.featuredImage.url}
           alt={post.title}
           layout="responsive"
           width={post.featuredImage.width}
           height={post.featuredImage.height}
-          className="object-top absolute h-80 w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
+          className="object-top w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
         />
       </div>
       <h2 className="transition duration-700 text-center mb-6 cursor-pointer hover:text-pink-600 text-3xl font-semibold">

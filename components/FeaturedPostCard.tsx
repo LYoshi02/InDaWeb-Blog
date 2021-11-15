@@ -12,12 +12,14 @@ const FeaturedPostCard = ({ post }: Props) => {
   return (
     <div key={post.slug} className="relative h-72">
       <div className="absolute top-0 left-0 w-full h-full rounded-lg z-0 overflow-hidden">
-        <Image
-          src={post.featuredImage.url}
-          alt={post.title}
-          layout="fill"
-          objectFit="cover"
-        />
+        <div className="relative w-full h-full">
+          <Image
+            src={post.featuredImage.url}
+            alt={post.title}
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       </div>
 
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10 rounded-lg"></div>

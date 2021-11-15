@@ -11,7 +11,7 @@ type Props = {
 const PostDetail = ({ post }: Props) => {
   return (
     <div className="bg-white shadow-lg rounded-lg lg:p-8 pb-12 mb-8">
-      <div className="relative overflow-hidden shadow-md mb-6">
+      <div className="overflow-hidden shadow-md mb-6">
         <Image
           src={post.featuredImage.url}
           alt={post.title}
@@ -34,7 +34,20 @@ const PostDetail = ({ post }: Props) => {
 
         <h2 className="mb-8 text-3xl font-semibold">{post.title}</h2>
         <div className="prose">
-          <RichText content={post.content.raw} />
+          <RichText
+            content={post.content.raw}
+            renderers={{
+              img: ({ src, title, height, width }) => (
+                <Image
+                  src={src!}
+                  alt={title}
+                  layout="responsive"
+                  height={height}
+                  width={width}
+                />
+              ),
+            }}
+          />
         </div>
       </div>
     </div>
