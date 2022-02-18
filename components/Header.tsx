@@ -19,7 +19,7 @@ const Header = () => {
         <div className="md:float-left block">
           <h1 className="cursor-pointer font-bold text-4xl text-white">
             <Link href="/" passHref>
-              <a>GraphCMS</a>
+              <a>InDaWeb</a>
             </Link>
           </h1>
         </div>

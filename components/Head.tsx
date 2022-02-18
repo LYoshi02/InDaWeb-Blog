@@ -7,10 +7,11 @@ type Props = {
 };
 
 const Head = (props: Props) => {
-  const pageTitle = props.title ? `${props.title} - CMS Blog` : "CMS Blog";
+  const pageTitle = props.title ? `${props.title} - InDaWeb` : "InDaWeb";
   const pageDescription =
     props.description || "This is a blog created with Next.js and GraphCMS";
-  const pageImageUrl = props.imageUrl || "/CMS-Blog.png";
+  const pageImageUrl =
+    props.imageUrl || "https://indawebblog.vercel.app/site.png";
 
   return (
     <NextHead>

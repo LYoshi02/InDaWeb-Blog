@@ -20,12 +20,16 @@ const Comments = (props: Props) => {
 
   if (comments.length === 0) return null;
 
+  const sortedComments = comments.sort((firstCom, secondCom) =>
+    firstCom.createdAt < secondCom.createdAt ? 1 : -1
+  );
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
       <h3 className="text-xl mb-8 font-semibold border-b pb-4">
         {comments.length} Comments
       </h3>
-      {comments.map((comment) => (
+      {sortedComments.map((comment) => (
         <div key={comment.id} className="border-b border-gray-100 mb-4 pb-4">
           <p className="mb-4">
             <span className="font-semibold">{comment.name}</span> on{" "}

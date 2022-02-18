@@ -48,6 +48,7 @@ const PostWidget = ({ slug, categories }: Props) => {
                 height="60"
                 className="rounded-full align-middle"
                 quality="100"
+                objectFit="cover"
               />
             </div>
             <div className="flex-grow ml-4">
